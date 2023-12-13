@@ -21,7 +21,6 @@ import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
-sdf;
 
 interface Props {
   type?: string;

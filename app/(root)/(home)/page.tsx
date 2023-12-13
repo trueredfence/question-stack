@@ -1,47 +1,27 @@
-// import QuestionCard from "@/components/cards/QuestionCard";
+import QuestionCard from "@/components/cards/QuestionCard";
+import HomeFilters from "@/components/home/HomeFilters";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 // import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
-// import { getQuestions, getRecommendedQuestions } from "@/lib/actions/question.action";
+import { getQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
 import type { Metadata } from "next";
-import { auth } from "@clerk/nextjs";
-import HomeFilters from "@/components/home/HomeFilters";
 
 export const metadata: Metadata = {
   title: "Home | Dev Overflow",
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {
-  const { userId } = auth();
-
-  const result = [{}];
-
-  // if (searchParams?.filter === "recommended") {
-  //   if (userId) {
-  //     result = await getRecommendedQuestions({
-  //       userId,
-  //       searchQuery: searchParams.q,
-  //       page: searchParams.page ? +searchParams.page : 1,
-  //     });
-  //   } else {
-  //     result = {
-  //       questions: [],
-  //       isNext: false,
-  //     };
-  //   }
-  // } else {
-  //   result = await getQuestions({
-  //     searchQuery: searchParams.q,
-  //     filter: searchParams.filter,
-  //     page: searchParams.page ? +searchParams.page : 1,
-  //   });
-  // }
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
+  });
 
   return (
     <>
@@ -74,20 +54,19 @@ export default async function Home({ searchParams }: SearchParamsProps) {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.length > 0 ? (
-          result.map((question) => (
-            <></>
-            // <QuestionCard
-            //   key={question._id}
-            //   _id={question._id}
-            //   title={question.title}
-            //   tags={question.tags}
-            //   author={question.author}
-            //   upvotes={question.upvotes}
-            //   views={question.views}
-            //   answers={question.answers}
-            //   createdAt={question.createdAt}
-            // />
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
+            />
           ))
         ) : (
           <NoResult
