@@ -1,3 +1,4 @@
+![Screenshot from 2024-05-03 10-05-44](https://github.com/trueredfence/question-stack/assets/147741505/0a9af6ea-370a-45d5-a7e0-5260691c3632)
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
